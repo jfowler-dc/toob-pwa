@@ -8,18 +8,41 @@
   </div>
 </template>
 <script>
+
+import {db} from './firebaseConfig'
+import {auth} from './firebaseConfig'
+
 export default {
+  data() {
+    return {
+      db: db,
+      auth: auth
+    }
+  },
   created() {
     if (this.$workbox) {
       this.$workbox.addEventListener("waiting", () => {
         this.showUpgradeUI = true;
       });
     }
+    this.firebase()
   },
   methods: {
     async accept() {
       this.showUpgradeUI = false
       await this.$workbox.messageSW({ type: "SKIP_WAITING" });
+    },
+    firebase() {
+      this.db.collection('test')
+        .add({name:'john'})
+        .then(() => {
+          return 'document written'
+        })
+        .catch(() => {
+          return 'document failed'
+        })
+
+     
     }
   },
 }
