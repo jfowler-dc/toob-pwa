@@ -1,0 +1,15 @@
+{
+  "name": "Toob",
+  "short_name": "toob",
+  "start_url": "index.html",
+  "display": "standalone",
+  "theme_color": "#42b983",
+  "background_color": "#fff",
+  "icons": [
+    {
+      "src": "./img/icons/android-chrome-512x512.png", 
+      "sizes": "512px",
+      "type": "image/png"
+    },
+  ]
+}
