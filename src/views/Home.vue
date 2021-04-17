@@ -1,13 +1,23 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <station 
+      v-for="(station, key) in stationList" 
+      :key="key" 
+      :name="station.Name"
+      :lineCode1="station.LineCode1"
+      :lineCode2="station.LineCode2"
+      :lineCode3="station.LineCode3"
+      :lineCode4="station.LineCode4"
+      :latitude="station.Lat"
+      :longitude="station.Lon"
+      :code="station.Code"
+      :address="station.Address" />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import Station from '@/components/Station.vue'
 import {auth} from '../firebaseConfig'
 
 import axios from 'axios'
@@ -15,11 +25,12 @@ import axios from 'axios'
 export default {
   name: 'Home',
   components: {
-    HelloWorld
+    Station
   },
   data() {
     return {
-      auth: auth
+      auth: auth,
+      stationList: Array
     }
   },
   methods: {
@@ -34,22 +45,29 @@ export default {
           console.log(error)
         })
     },
-    getStationList() {
-      let url = 'https://stationlist.toob.workers.dev/?LineCode=YL'
+    getTrainList() {
+      let url = 'https://stationlist.toob.workers.dev/'
       axios
         .get(url)
         .then( response => {
-          console.log(response)
+          this.stationList = response.data.Stations.sort(this.alphabetize)
         })
         .catch( error => {
           console.log(error)
         })
+    },
+    alphabetize(a, b) {
+      if (a.Name < b.Name)
+        return - 1;
+      if (a.Name > b.Name)
+        return 1;
+      return 0;
     }
   },
   mounted() {
     console.log(this.auth)
     this.getLines()
-    this.getStationList()
+    this.getTrainList()
   }
 }
 </script>

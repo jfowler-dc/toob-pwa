@@ -1,0 +1,45 @@
+:root {
+    --helvetica: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+    --red: #cb0a0a;
+    --blue: #2856d1;
+    --yellow: #e6ef0b;
+    --orange: #e39d4c;
+    --green: #188d21;
+    --silver: #bcbcbc;
+    
+}
+
+html, body {
+    margin:0;
+}
+
+#app {
+    font-family: var(--helvetica);
+    width:90%;
+    margin:0 auto;
+}
+
+.RD {
+    background: var(--red);
+}
+.BL {
+    background: var(--blue);
+}
+.YL {
+    background: var(--yellow);
+}
+.OR {
+    background: var(--orange);
+}
+.GR {
+    background: var(--green);
+}
+.SV {
+    background: var(--silver);
+}
+
+
+
+
+
