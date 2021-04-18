@@ -60,11 +60,11 @@ export default {
   },
   methods: {
     getNextTrains() {
+      this.trains = []
       let url = 'https://nexttrains.toob.workers.dev?StationCode=' + this.$route.params.stationCode
       axios
         .get(url)
         .then( response => {
-          this.trains = []
           this.trains = response.data.Trains.sort(this.sortMinutes)
         })
         .catch( error => {
