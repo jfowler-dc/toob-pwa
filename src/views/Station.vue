@@ -1,11 +1,20 @@
 <template>
-  <div class="mt-4" v-if="stationInfo">
-    <div>
-        <h2 class="mb-2.5 text-lg font-bold">{{stationInfo.Name}}</h2>
-        <p class="text-base" v-if="stationInfo.Address != '' ">{{stationInfo.Address.Street}}<br>{{stationInfo.Address.City}} {{stationInfo.Address.State}}, {{stationInfo.Address.Zip}}</p>
-    </div>
-    <div v-if="stationInfo.Address != '' ">
-        <iframe :src="'https://maps.google.com/maps?q=' + stationInfo.Address.Lat +','+ stationInfo.Address.Lon + '&z=15&output=embed&key='" width="360" height="270" frameborder="0" style="border:0"></iframe>
+  <div class="mt-4">
+    <div class="flex items-begin justify-between">
+        <div>
+            <h2 class="mb-2.5 text-lg font-bold">{{name}}</h2>
+            <p class="text-base" v-if="address != '' ">{{address.Street}}<br>{{address.City}} {{address.State}}, {{address.Zip}}</p>
+        </div>
+        <div class="flex items-begin ">
+            <div class="flex">
+                <div class="w-5	h-5 train-line rounded-full ml-2.5"
+                    v-for="(line, key) in stationLines"
+                    :key="key"
+                    :class="line">
+                </div>
+            </div>
+            
+        </div>
     </div>
   </div>
 </template>
@@ -25,10 +34,12 @@ export default {
     return {
       auth: auth,
       trains: Array,
-      stationInfo: {
-          Name: '',
-          Address: ''
-      }
+      name: String,
+      address: Object,
+      lineCode1: String,
+      lineCode2: String,
+      lineCode3: String,
+      lineCode4: String
     }
   },
   methods: {
@@ -48,7 +59,12 @@ export default {
       axios
         .get(url)
         .then( response => {
-          this.stationInfo = response.data
+          this.name = response.data.Name
+          this.address = response.data.Address
+          this.lineCode1 = response.data.LineCode1
+          this.lineCode2 = response.data.LineCode2
+          this.lineCode3 = response.data.LineCode3
+          this.lineCode4 = response.data.LineCode4
         })
         .catch( error => {
           console.log(error)
@@ -58,6 +74,18 @@ export default {
   mounted() {
     this.getNextTrains()
     this.getStationInfo() 
+  },
+  computed: {
+    stationLines() {
+      let lines = [this.lineCode1, this.lineCode2, this.lineCode3, this.lineCode4]
+      let stationLines = []
+      lines.forEach(e => {
+        if (e != null) {
+          stationLines.push(e)
+        }
+      })
+      return stationLines
+    }
   }
 }
 </script>

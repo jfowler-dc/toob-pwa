@@ -2,7 +2,9 @@
   <div>
     <nav
       :class="open ? 'navbar-open' : 'navbar-close'"
-      class="navbar w-64 absolute overflow-x-scroll bg-gray-700 top-0 left-0 h-screen z-50">
+      class="navbar w-64 absolute overflow-x-scroll bg-gray-700 top-0 left-0 h-screen z-50"
+      v-clickoutside="hideNavigation">
+
       <div class="flex pr-2 justify-end">
         <button 
           @click="toggleNavigation" 
@@ -15,11 +17,11 @@
 
       <ul class="list-none text-white text-center">
         <li v-for="(item, key) in navigationItems" :key="key">
-          <router-link :to="item.url">{{item.title}}</router-link>
+          <router-link :to="item.url" @click.native="hideNavigation">{{item.title}}</router-link>
         </li>
       </ul>
-    </nav>
 
+    </nav>
 
     <header
       class="flex items-center py-6 border-b-4 solid border-black">
@@ -63,8 +65,36 @@ export default {
     toggleNavigation() {
       this.open = !this.open;
     },
+    hideNavigation() {
+      this.open = false
+    }
   },
+  directives: {
+    clickoutside: {
+      bind: function (el, binding, vnode) {
+        console.log('test')
+        el.clickOutsideEvent = function (event) {
+          if (vnode.context.showFilterContents == true) {
+            if (!(el == event.target || el.contains(event.target))) {
+              vnode.context[binding.expression](event);
+            }
+          }
+        };
+        document.body.addEventListener("click", el.clickOutsideEvent);
+      },
+      unbind: function (el) {
+        document.body.removeEventListener("click", el.clickOutsideEvent);
+      },
+      stopProp: function (event) {
+        event.stopPropagation();
+      }
+    }
+  }
 };
+
+
+
+
 </script>
 
 <style scoped>
