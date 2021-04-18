@@ -30,6 +30,10 @@ html, body {
   background: var(--yellow);
 }
 
+.YL.text-white {
+  color: #000;
+}
+
 .OR {
   background: var(--orange);
 }

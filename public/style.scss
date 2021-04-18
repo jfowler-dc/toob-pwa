@@ -28,6 +28,9 @@ html, body {
 }
 .YL {
     background: var(--yellow);
+    &.text-white {
+        color:#000;
+    }
 }
 .OR {
     background: var(--orange);

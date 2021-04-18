@@ -1,22 +1,23 @@
 <template>
   <div>
     <nav
+      class="navbar w-64 absolute overflow-x-scroll bg-white border-black border-r-4 border-solid top-0 left-0 h-screen z-50 px-8 py-4"
       :class="open ? 'navbar-open' : 'navbar-close'"
-      class="navbar w-64 absolute overflow-x-scroll bg-gray-700 top-0 left-0 h-screen z-50"
       v-clickoutside="hideNavigation">
-
-      <div class="flex pr-2 justify-end">
+      <div class="flex justify-between items-center mb-8">
+        <h2 class="text-3xl text-left font-bold">Menu</h2>
         <button 
           @click="toggleNavigation" 
-          class="p-2 text-white text-xl font-bold">
-          &#9747;
+          class="text-black text-2xl font-bold">
+          <i class="fas fa-times"></i>
         </button>
       </div>
-      
-      <h2 class="text-xl text-center font-bold pt-5">Menu</h2>
 
-      <ul class="list-none text-white text-center">
-        <li v-for="(item, key) in navigationItems" :key="key">
+      <ul class="list-none text-black text-left">
+        <li
+          class="text-2xl font-bold mb-2" 
+          v-for="(item, key) in navigationItems" 
+          :key="key">
           <router-link :to="item.url" @click.native="hideNavigation">{{item.title}}</router-link>
         </li>
       </ul>
@@ -28,8 +29,8 @@
       <div :class="open ? 'opacity-25' : 'opacity-100'">
         <button 
           @click="toggleNavigation" 
-          class="text-black text-2xl p-2 font-bold">
-          &#9776;
+          class="text-black text-2xl font-bold">
+          <i class="fas fa-bars"></i>
         </button>
       </div>
       <h1 class="text-center w-full text-4xl font-bold">{{$route.name}}</h1>
@@ -48,8 +49,12 @@ export default {
       open: false,
       navigationItems: [
         {
-          title: 'Home',
+          title: 'All Stations',
           url: '/'
+        },
+        {
+          title: 'Saved',
+          url: '/saved'
         },
         {
           title: 'About',
@@ -63,7 +68,7 @@ export default {
   },
   methods: {
     toggleNavigation() {
-      this.open = !this.open;
+      this.open = !this.open
     },
     hideNavigation() {
       this.open = false
@@ -72,25 +77,27 @@ export default {
   directives: {
     clickoutside: {
       bind: function (el, binding, vnode) {
-        console.log('test')
+        console.log('bind')
         el.clickOutsideEvent = function (event) {
           if (vnode.context.showFilterContents == true) {
             if (!(el == event.target || el.contains(event.target))) {
-              vnode.context[binding.expression](event);
+              vnode.context[binding.expression](event)
             }
           }
         };
-        document.body.addEventListener("click", el.clickOutsideEvent);
+        document.body.addEventListener("click", el.clickOutsideEvent)
       },
       unbind: function (el) {
-        document.body.removeEventListener("click", el.clickOutsideEvent);
+        console.log('unbind')
+        document.body.removeEventListener("click", el.clickOutsideEvent)
       },
       stopProp: function (event) {
-        event.stopPropagation();
+        console.log('stop')
+        event.stopPropagation()
       }
     }
   }
-};
+}
 
 
 

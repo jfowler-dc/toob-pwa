@@ -50,13 +50,13 @@ export default {
       axios
         .get(url)
         .then( response => {
-          this.stationList = response.data.Stations.sort(this.alphabetize)
+          this.stationList = response.data.Stations.sort(this.sortAlphabetize)
         })
         .catch( error => {
           console.log(error)
         })
     },
-    alphabetize(a, b) {
+    sortAlphabetize(a, b) {
       if (a.Name < b.Name)
         return - 1;
       if (a.Name > b.Name)
