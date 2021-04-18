@@ -38,6 +38,9 @@
 <script>
 export default {
   name: "Navigation",
+  props: {
+    title: String
+  },
   data() {
     return {
       open: false,
@@ -53,7 +56,9 @@ export default {
       ]
     };
   },
-  created() {},
+  created() {
+
+  },
   methods: {
     toggleNavigation() {
       this.open = !this.open;

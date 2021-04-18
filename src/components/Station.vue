@@ -1,5 +1,5 @@
 <template>
-    <div class="flex justify-between pb-5 mb-4 border-b solid border-gray-300">
+    <div class="flex justify-between items-center pb-5 mb-4 border-b solid border-gray-300">
         <router-link :to="'/station/' + code">
           <div>
               <h2 class="mb-2.5 text-lg font-bold">{{name}}</h2>

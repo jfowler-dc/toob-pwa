@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="mt-4">
     <station 
       v-for="(station, key) in stationList" 
       :key="key" 
