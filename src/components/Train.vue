@@ -9,7 +9,7 @@
         </div>
         <h3 class="font-bold text-lg">{{destinationName}}</h3>
     </div>
-    <div>
+    <div class="flex-shrink-0 pl-4">
         <span class="text-3xl font-bold">{{returnTimeRemaining}}</span>
     </div>
   </div>
@@ -38,9 +38,9 @@ export default {
         if (this.minutes != '' && this.minutes != 'ARR' && this.minutes != 'BRD') {
             return this.minutes + ' Min'
         } else if (this.minutes == 'ARR') {
-            return this.minutes
+            return 'Arriving'
         } else if (this.minutes == 'BRD') {
-            return this.minutes
+            return 'Boarding'
         } else {
             return '?'
         }

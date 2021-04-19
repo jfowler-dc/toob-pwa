@@ -21,12 +21,12 @@
 
         <div>
             <transition-group name="flip-list" tag="ul">
-                <train 
-                    v-for="(train, key) in trains" 
-                    :key="key" 
-                    :destinationName="train.DestinationName"
-                    :minutes="train.Min"
-                    :line="train.Line" />
+                <li v-for="(train, key) in trains" :key="key">
+                    <train  
+                        :destinationName="train.DestinationName"
+                        :minutes="train.Min"
+                        :line="train.Line" />
+                </li>
             </transition-group>
         </div>
 
@@ -55,12 +55,13 @@ export default {
       lineCode1: String,
       lineCode2: String,
       lineCode3: String,
-      lineCode4: String
+      lineCode4: String,
+      timer: ''
     }
   },
   methods: {
     getNextTrains() {
-      this.trains = []
+      //this.trains = []
       let url = 'https://nexttrains.toob.workers.dev?StationCode=' + this.$route.params.stationCode
       axios
         .get(url)
@@ -101,17 +102,15 @@ export default {
         return 1;
       return 0;
     },
-    runNextTrainsScript() {
-      this.getNextTrains()
-
-      setInterval(() => {
-        this.getNextTrains()
-      }, 30000)
-    },
+    
   },
   mounted() {
-    this.runNextTrainsScript()
+    
     this.getStationInfo() 
+  },
+  created() {
+      this.getNextTrains()
+      this.timer = setInterval(this.getNextTrains, 15 * 1000)
   },
   computed: {
     stationLines() {
